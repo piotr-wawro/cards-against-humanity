@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CardsAgainstHumanity.DevelopmentMigrations.Migrations
 {
     [DbContext(typeof(CahDbContext))]
-    [Migration("20230720155146_init")]
+    [Migration("20230720165834_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -56,6 +56,26 @@ namespace CardsAgainstHumanity.DevelopmentMigrations.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Audits");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AffectedOn = new DateTime(2021, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AffectedOn = new DateTime(2021, 1, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AffectedOn = new DateTime(2021, 1, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UserId = 2
+                        });
                 });
 
             modelBuilder.Entity("CardsAgainstHumanity.DatabaseAccess.Entities.Card", b =>
@@ -91,6 +111,49 @@ namespace CardsAgainstHumanity.DevelopmentMigrations.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Cards");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Language = "English",
+                            Text = "White card 1",
+                            Type = "White",
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Language = "English",
+                            Text = "White card 2",
+                            Type = "White",
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Language = "English",
+                            Text = "White card 3",
+                            Type = "White",
+                            UserId = 2
+                        },
+                        new
+                        {
+                            Id = 4,
+                            BaseCardId = 2,
+                            Language = "English",
+                            Text = "White card 4",
+                            Type = "White",
+                            UserId = 2
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Language = "English",
+                            Text = "Black card 1",
+                            Type = "Black",
+                            UserId = 2
+                        });
                 });
 
             modelBuilder.Entity("CardsAgainstHumanity.DatabaseAccess.Entities.CardVote", b =>
@@ -109,6 +172,26 @@ namespace CardsAgainstHumanity.DevelopmentMigrations.Migrations
                     b.HasIndex("CardId");
 
                     b.ToTable("CardVotes");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            CardId = 1,
+                            Vote = (byte)1
+                        },
+                        new
+                        {
+                            UserId = 1,
+                            CardId = 2,
+                            Vote = (byte)1
+                        },
+                        new
+                        {
+                            UserId = 2,
+                            CardId = 2,
+                            Vote = (byte)0
+                        });
                 });
 
             modelBuilder.Entity("CardsAgainstHumanity.DatabaseAccess.Entities.Deck", b =>
@@ -147,6 +230,28 @@ namespace CardsAgainstHumanity.DevelopmentMigrations.Migrations
                         .IsUnique();
 
                     b.ToTable("Decks");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Language = "English",
+                            Name = "Deck 1",
+                            UserId = 1,
+                            black = (short)1,
+                            safe_content = true,
+                            white = (short)1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Language = "English",
+                            Name = "Deck 2",
+                            UserId = 2,
+                            black = (short)1,
+                            safe_content = true,
+                            white = (short)1
+                        });
                 });
 
             modelBuilder.Entity("CardsAgainstHumanity.DatabaseAccess.Entities.DeckCard", b =>
@@ -193,6 +298,22 @@ namespace CardsAgainstHumanity.DevelopmentMigrations.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("DeckGroups");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DeckId = 1,
+                            Name = "User 1 deck group",
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            DeckId = 1,
+                            Name = "User 2 deck group",
+                            UserId = 2
+                        });
                 });
 
             modelBuilder.Entity("CardsAgainstHumanity.DatabaseAccess.Entities.DeckVote", b =>
@@ -211,6 +332,14 @@ namespace CardsAgainstHumanity.DevelopmentMigrations.Migrations
                     b.HasIndex("DeckId");
 
                     b.ToTable("DeckVotes");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            DeckId = 1,
+                            Vote = (byte)1
+                        });
                 });
 
             modelBuilder.Entity("CardsAgainstHumanity.DatabaseAccess.Entities.User", b =>
@@ -249,6 +378,26 @@ namespace CardsAgainstHumanity.DevelopmentMigrations.Migrations
                         .IsUnique();
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Created = new DateTime(2020, 11, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "user1@xyz.com",
+                            Hash = new byte[] { 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33 },
+                            Nickname = "User1",
+                            Salt = new byte[] { 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33 }
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Created = new DateTime(2020, 11, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "user2@xyz.com",
+                            Hash = new byte[] { 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34 },
+                            Nickname = "User2",
+                            Salt = new byte[] { 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34 }
+                        });
                 });
 
             modelBuilder.Entity("CardsAgainstHumanity.DatabaseAccess.Entities.UserHistory", b =>
@@ -286,6 +435,35 @@ namespace CardsAgainstHumanity.DevelopmentMigrations.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("UserHistories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Email = "user1@xyz.com",
+                            Hash = new byte[] { 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33 },
+                            Nickname = "User111",
+                            Salt = new byte[] { 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33 },
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Email = "user2@xyz.com",
+                            Hash = new byte[] { 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34 },
+                            Nickname = "User22",
+                            Salt = new byte[] { 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34 },
+                            UserId = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Email = "user1@xyz.com",
+                            Hash = new byte[] { 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33 },
+                            Nickname = "User11",
+                            Salt = new byte[] { 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33 },
+                            UserId = 1
+                        });
                 });
 
             modelBuilder.Entity("CardDeck", b =>

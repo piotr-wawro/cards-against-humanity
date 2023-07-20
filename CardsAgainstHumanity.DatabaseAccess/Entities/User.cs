@@ -9,8 +9,8 @@ public class User {
     public required string Nickname { get; set; }
     [DataType(DataType.EmailAddress)]
     public required string Email { get; set; }
-    public required Byte Hash { get; set; }
-    public required Byte Salt { get; set; }
+    public required Byte[] Hash { get; set; }
+    public required Byte[] Salt { get; set; }
     public required DateTime Created { get; set; }
     public DateTime? Deleted { get; set; }
 

@@ -10,5 +10,25 @@ public class AuditConfig : IEntityTypeConfiguration<Audit> {
             .WithMany(parent => parent.Audits)
             .HasForeignKey(child => child.UserId)
             .OnDelete(DeleteBehavior.NoAction);
+
+        if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development") {
+            builder.HasData(
+                new {
+                    Id = 1,
+                    AffectedOn = new DateTime(2021, 1, 1),
+                    UserId = 1,
+                },
+                new {
+                    Id = 2,
+                    AffectedOn = new DateTime(2021, 1, 2),
+                    UserId = 1,
+                },
+                new {
+                    Id = 3,
+                    AffectedOn = new DateTime(2021, 1, 3),
+                    UserId = 2,
+                }
+            );
+        }
     }
 }

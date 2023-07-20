@@ -3,25 +3,29 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CardsAgainstHumanity.DatabaseAccess.Entities.Configuration;
 
-public class DeckGroupConfig : IEntityTypeConfiguration<DeckGroup> {
-    public void Configure(EntityTypeBuilder<DeckGroup> builder) {
-        builder.Property(e => e.Name)
-            .HasColumnType("nvarchar(64)");
-
-
+internal class DeckCardConfig : IEntityTypeConfiguration<DeckCard> {
+    public void Configure(EntityTypeBuilder<DeckCard> builder) {
         if(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development") {
             builder.HasData(
                 new {
                     Id = 1,
-                    Name = "User 1 deck group",
-                    UserId = 1,
                     DeckId = 1,
+                    CardId = 1,
                 },
                 new {
                     Id = 2,
-                    Name = "User 2 deck group",
-                    UserId = 2,
                     DeckId = 1,
+                    CardId = 4,
+                },
+                new {
+                    Id = 3,
+                    DeckId = 2,
+                    CardId = 3,
+                },
+                new {
+                    Id = 4,
+                    DeckId = 2,
+                    CardId = 4,
                 }
             );
         }
