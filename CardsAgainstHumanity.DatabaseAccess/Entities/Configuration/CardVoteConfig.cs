@@ -10,17 +10,17 @@ public class CardVoteConfig : IEntityTypeConfiguration<CardVote> {
 
         if(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development") {
             builder.HasData(
-                new {
+                new CardVote {
                     Vote = 1,
                     UserId = 1,
                     CardId = 1,
                 },
-                new {
+                new CardVote {
                     Vote = 1,
                     UserId = 1,
                     CardId = 2,
                 },
-                new {
+                new CardVote {
                     Vote = 0,
                     UserId = 2,
                     CardId = 2,

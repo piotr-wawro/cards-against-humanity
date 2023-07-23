@@ -1,11 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace CardsAgainstHumanity.DatabaseAccess.Entities;
 
 [Index(nameof(Nickname), IsUnique = true)]
 public class User {
-    public required int Id { get; set; }
+    public int Id { get; set; }
+    public required UserRole Role { get; set; }
     public required string Nickname { get; set; }
     [DataType(DataType.EmailAddress)]
     public required string Email { get; set; }
@@ -21,4 +23,10 @@ public class User {
     public ICollection<CardVote> CardVotes { get; } = new List<CardVote>();
     public ICollection<Card> Cards { get; } = new List<Card>();
     public ICollection<DeckGroup> DeckGroups { get; } = new List<DeckGroup>();
+}
+
+[JsonConverter(typeof(JsonStringEnumConverter))]
+public enum UserRole {
+    Admin,
+    User
 }

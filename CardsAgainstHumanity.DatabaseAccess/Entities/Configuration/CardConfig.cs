@@ -30,28 +30,28 @@ public class CardConfig : IEntityTypeConfiguration<Card> {
 
         if(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development") {
             builder.HasData(
-                new {
+                new Card {
                     Id = 1,
                     Type = CardType.White,
                     Text = "White card 1",
                     Language = Language.English,
                     UserId = 1,
                 },
-                new {
+                new Card {
                     Id = 2,
                     Type = CardType.White,
                     Text = "White card 2",
                     Language = Language.English,
                     UserId = 1,
                 },
-                new {
+                new Card {
                     Id = 3,
                     Type = CardType.White,
                     Text = "White card 3",
                     Language = Language.English,
                     UserId = 2,
                 },
-                new {
+                new Card {
                     Id = 4,
                     Type = CardType.White,
                     Text = "White card 4",
@@ -59,7 +59,7 @@ public class CardConfig : IEntityTypeConfiguration<Card> {
                     UserId = 2,
                     BaseCardId = 2,
                 },
-                new {
+                new Card {
                     Id = 5,
                     Type = CardType.Black,
                     Text = "Black card 1",

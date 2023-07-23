@@ -10,7 +10,7 @@ public class DeckVoteConfig : IEntityTypeConfiguration<DeckVote> {
 
         if(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development") {
             builder.HasData(
-                new {
+                new DeckVote {
                     Vote = 1,
                     UserId = 1,
                     DeckId = 1,

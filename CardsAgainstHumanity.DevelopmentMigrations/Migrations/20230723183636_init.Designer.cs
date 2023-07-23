@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CardsAgainstHumanity.DevelopmentMigrations.Migrations
 {
     [DbContext(typeof(CahDbContext))]
-    [Migration("20230720165834_init")]
+    [Migration("20230723183636_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -210,14 +210,14 @@ namespace CardsAgainstHumanity.DevelopmentMigrations.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(64)");
 
+                    b.Property<bool>("SafeContent")
+                        .HasColumnType("bit");
+
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.Property<short>("black")
                         .HasColumnType("smallint");
-
-                    b.Property<bool>("safe_content")
-                        .HasColumnType("bit");
 
                     b.Property<short>("white")
                         .HasColumnType("smallint");
@@ -237,9 +237,9 @@ namespace CardsAgainstHumanity.DevelopmentMigrations.Migrations
                             Id = 1,
                             Language = "English",
                             Name = "Deck 1",
+                            SafeContent = true,
                             UserId = 1,
                             black = (short)1,
-                            safe_content = true,
                             white = (short)1
                         },
                         new
@@ -247,9 +247,9 @@ namespace CardsAgainstHumanity.DevelopmentMigrations.Migrations
                             Id = 2,
                             Language = "English",
                             Name = "Deck 2",
+                            SafeContent = true,
                             UserId = 2,
                             black = (short)1,
-                            safe_content = true,
                             white = (short)1
                         });
                 });
@@ -368,6 +368,10 @@ namespace CardsAgainstHumanity.DevelopmentMigrations.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(64)");
 
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("varchar(32)");
+
                     b.Property<byte[]>("Salt")
                         .IsRequired()
                         .HasColumnType("binary(16)");
@@ -387,6 +391,7 @@ namespace CardsAgainstHumanity.DevelopmentMigrations.Migrations
                             Email = "user1@xyz.com",
                             Hash = new byte[] { 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33 },
                             Nickname = "User1",
+                            Role = "User",
                             Salt = new byte[] { 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33 }
                         },
                         new
@@ -396,6 +401,7 @@ namespace CardsAgainstHumanity.DevelopmentMigrations.Migrations
                             Email = "user2@xyz.com",
                             Hash = new byte[] { 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34 },
                             Nickname = "User2",
+                            Role = "User",
                             Salt = new byte[] { 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34 }
                         });
                 });
@@ -629,8 +635,7 @@ namespace CardsAgainstHumanity.DevelopmentMigrations.Migrations
 
             modelBuilder.Entity("CardsAgainstHumanity.DatabaseAccess.Entities.UserHistory", b =>
                 {
-                    b.Navigation("Audit")
-                        .IsRequired();
+                    b.Navigation("Audit");
                 });
 #pragma warning restore 612, 618
         }

@@ -11,13 +11,13 @@ public class DeckGroupConfig : IEntityTypeConfiguration<DeckGroup> {
 
         if(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development") {
             builder.HasData(
-                new {
+                new DeckGroup {
                     Id = 1,
                     Name = "User 1 deck group",
                     UserId = 1,
                     DeckId = 1,
                 },
-                new {
+                new DeckGroup {
                     Id = 2,
                     Name = "User 2 deck group",
                     UserId = 2,

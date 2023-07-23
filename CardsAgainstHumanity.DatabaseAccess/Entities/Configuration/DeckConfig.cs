@@ -29,23 +29,23 @@ public class DeckConfig : IEntityTypeConfiguration<Deck> {
 
         if(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development") {
             builder.HasData(
-                new {
+                new Deck {
                     Id = 1,
                     Name = "Deck 1",
                     Language = Language.English,
                     UserId = 1,
                     black = 1,
                     white = 1,
-                    safe_content = true,
+                    SafeContent = true,
                 },
-                new {
+                new Deck {
                     Id = 2,
                     Name = "Deck 2",
                     Language = Language.English,
                     UserId = 2,
                     black = 1,
                     white = 1,
-                    safe_content = true,
+                    SafeContent = true,
                 }
             );
         }

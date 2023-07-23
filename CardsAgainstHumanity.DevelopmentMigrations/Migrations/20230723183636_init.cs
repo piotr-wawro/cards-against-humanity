@@ -3,7 +3,9 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace CardsAgainstHumanity.DatabaseAccess.Migrations
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
+namespace CardsAgainstHumanity.DevelopmentMigrations.Migrations
 {
     /// <inheritdoc />
     public partial class init : Migration
@@ -31,6 +33,7 @@ namespace CardsAgainstHumanity.DatabaseAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Role = table.Column<string>(type: "varchar(32)", nullable: false),
                     Nickname = table.Column<string>(type: "nvarchar(64)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(64)", nullable: false),
                     Hash = table.Column<byte[]>(type: "binary(32)", nullable: false),
@@ -80,7 +83,7 @@ namespace CardsAgainstHumanity.DatabaseAccess.Migrations
                     Language = table.Column<string>(type: "nvarchar(32)", nullable: false),
                     black = table.Column<short>(type: "smallint", nullable: false),
                     white = table.Column<short>(type: "smallint", nullable: false),
-                    safe_content = table.Column<bool>(type: "bit", nullable: false),
+                    SafeContent = table.Column<bool>(type: "bit", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -241,6 +244,84 @@ namespace CardsAgainstHumanity.DatabaseAccess.Migrations
                         principalTable: "Users",
                         principalColumn: "Id");
                 });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "Created", "Deleted", "Email", "Hash", "Nickname", "Role", "Salt" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2020, 11, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "user1@xyz.com", new byte[] { 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33 }, "User1", "User", new byte[] { 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33 } },
+                    { 2, new DateTime(2020, 11, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "user2@xyz.com", new byte[] { 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34 }, "User2", "User", new byte[] { 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34 } }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Cards",
+                columns: new[] { "Id", "BaseCardId", "Language", "Text", "Type", "UserId" },
+                values: new object[,]
+                {
+                    { 1, null, "English", "White card 1", "White", 1 },
+                    { 2, null, "English", "White card 2", "White", 1 },
+                    { 3, null, "English", "White card 3", "White", 2 },
+                    { 5, null, "English", "Black card 1", "Black", 2 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Decks",
+                columns: new[] { "Id", "Language", "Name", "SafeContent", "UserId", "black", "white" },
+                values: new object[,]
+                {
+                    { 1, "English", "Deck 1", true, 1, (short)1, (short)1 },
+                    { 2, "English", "Deck 2", true, 2, (short)1, (short)1 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "UserHistories",
+                columns: new[] { "Id", "Deleted", "Email", "Hash", "Nickname", "Salt", "UserId" },
+                values: new object[,]
+                {
+                    { 1, null, "user1@xyz.com", new byte[] { 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33 }, "User111", new byte[] { 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33 }, 1 },
+                    { 2, null, "user2@xyz.com", new byte[] { 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34 }, "User22", new byte[] { 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34 }, 2 },
+                    { 3, null, "user1@xyz.com", new byte[] { 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33 }, "User11", new byte[] { 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33 }, 1 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Audits",
+                columns: new[] { "Id", "AffectedOn", "UserId" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2021, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1 },
+                    { 2, new DateTime(2021, 1, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), 1 },
+                    { 3, new DateTime(2021, 1, 3, 0, 0, 0, 0, DateTimeKind.Unspecified), 2 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "CardVotes",
+                columns: new[] { "CardId", "UserId", "Vote" },
+                values: new object[,]
+                {
+                    { 1, 1, (byte)1 },
+                    { 2, 1, (byte)1 },
+                    { 2, 2, (byte)0 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Cards",
+                columns: new[] { "Id", "BaseCardId", "Language", "Text", "Type", "UserId" },
+                values: new object[] { 4, 2, "English", "White card 4", "White", 2 });
+
+            migrationBuilder.InsertData(
+                table: "DeckGroups",
+                columns: new[] { "Id", "DeckId", "Name", "UserId" },
+                values: new object[,]
+                {
+                    { 1, 1, "User 1 deck group", 1 },
+                    { 2, 1, "User 2 deck group", 2 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "DeckVotes",
+                columns: new[] { "DeckId", "UserId", "Vote" },
+                values: new object[] { 1, 1, (byte)1 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Audits_UserId",

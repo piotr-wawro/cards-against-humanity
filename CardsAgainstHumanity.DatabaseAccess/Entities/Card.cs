@@ -1,7 +1,9 @@
-﻿namespace CardsAgainstHumanity.DatabaseAccess.Entities;
+﻿using System.Text.Json.Serialization;
+
+namespace CardsAgainstHumanity.DatabaseAccess.Entities;
 
 public class Card {
-    public required int Id { get; set; }
+    public int Id { get; set; }
     public required CardType Type { get; set; }
     public required string Text { get; set; }
     public required Language Language { get; set; }
@@ -17,6 +19,7 @@ public class Card {
     public ICollection<Deck> Decks { get; } = new List<Deck>();
 }
 
+[JsonConverter(typeof(JsonStringEnumConverter))]
 public enum CardType {
     White,
     Black

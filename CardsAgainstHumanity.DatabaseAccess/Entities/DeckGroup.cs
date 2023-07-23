@@ -1,7 +1,7 @@
 ﻿namespace CardsAgainstHumanity.DatabaseAccess.Entities;
 
 public class DeckGroup {
-    public required int Id { get; set; }
+    public int Id { get; set; }
     public required string Name { get; set; }
 
     public required int UserId { get; set; }

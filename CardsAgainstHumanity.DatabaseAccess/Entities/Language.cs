@@ -1,5 +1,9 @@
-﻿namespace CardsAgainstHumanity.DatabaseAccess.Entities;
+﻿using System.Text.Json.Serialization;
 
+namespace CardsAgainstHumanity.DatabaseAccess.Entities;
+
+
+[JsonConverter(typeof(JsonStringEnumConverter))]
 public enum Language
 {
     Abkhazian,

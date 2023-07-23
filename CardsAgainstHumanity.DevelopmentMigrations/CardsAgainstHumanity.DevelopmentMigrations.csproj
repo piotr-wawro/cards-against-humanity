@@ -10,4 +10,8 @@
     <ProjectReference Include="..\CardsAgainstHumanity.DatabaseAccess\CardsAgainstHumanity.DatabaseAccess.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

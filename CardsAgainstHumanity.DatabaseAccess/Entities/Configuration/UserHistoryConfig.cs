@@ -24,21 +24,23 @@ public class UserHistoryConfig : IEntityTypeConfiguration<UserHistory> {
 
         if(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development") {
             builder.HasData(
-                new {
+                new UserHistory {
                     Id = 1,
                     Nickname = "User111",
                     Email = "user1@xyz.com",
                     Hash = Enumerable.Repeat((byte)0x21, 32).ToArray(),
                     Salt = Enumerable.Repeat((byte)0x21, 16).ToArray(),
                     UserId = 1,
-                }, new {
+                },
+                new UserHistory {
                     Id = 2,
                     Nickname = "User22",
                     Email = "user2@xyz.com",
                     Hash = Enumerable.Repeat((byte)0x22, 32).ToArray(),
                     Salt = Enumerable.Repeat((byte)0x22, 16).ToArray(),
                     UserId = 2,
-                }, new {
+                },
+                new UserHistory {
                     Id = 3,
                     Nickname = "User11",
                     Email = "user1@xyz.com",

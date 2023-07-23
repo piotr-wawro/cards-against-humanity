@@ -13,17 +13,17 @@ public class AuditConfig : IEntityTypeConfiguration<Audit> {
 
         if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development") {
             builder.HasData(
-                new {
+                new Audit {
                     Id = 1,
                     AffectedOn = new DateTime(2021, 1, 1),
                     UserId = 1,
                 },
-                new {
+                new Audit {
                     Id = 2,
                     AffectedOn = new DateTime(2021, 1, 2),
                     UserId = 1,
                 },
-                new {
+                new Audit {
                     Id = 3,
                     AffectedOn = new DateTime(2021, 1, 3),
                     UserId = 2,
