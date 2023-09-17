@@ -59,7 +59,7 @@ public class AuthenticationService : IAuthenticationService {
 static class TokenManager {
     public static string GenerateToken(User user, IConfiguration configuration) {
         var claims = new ClaimsIdentity(new[] {
-            new Claim(ClaimTypes.Name, user.Id.ToString()),
+            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
             new Claim(ClaimTypes.Role, user.Role.ToString())
         });
 

@@ -32,7 +32,7 @@ public class DeckController : ControllerBase {
     [HttpPost]
     [Authorize(Roles = "User")]
     public ActionResult<DeckDto> CreateDeck([FromBody] CreateDeckDto par) {
-        var userId = int.Parse(User.FindFirst(ClaimTypes.Name).Value);
+        var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
         var deck = _deckService.CreateDeck(userId, par);
         return CreatedAtAction(nameof(CreateDeck), new { id = deck.Id }, deck);
     }
@@ -40,7 +40,7 @@ public class DeckController : ControllerBase {
     [HttpPatch]
     [Authorize(Roles = "User")]
     public ActionResult<DeckDto> UpdateDeck([FromBody] UpdateDeckDto par) {
-        var userId = int.Parse(User.FindFirst(ClaimTypes.Name).Value);
+        var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
         var deck = _deckService.UpdateDeck(userId, par);
         if(deck == null) return NotFound();
         return Ok(deck);
@@ -49,7 +49,7 @@ public class DeckController : ControllerBase {
     [HttpDelete("{id}")]
     [Authorize(Roles = "User")]
     public ActionResult DeleteDeck([FromRoute] int id) {
-        var userId = int.Parse(User.FindFirst(ClaimTypes.Name).Value);
+        var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
         _deckService.DeleteDeck(userId, id);
         return Ok();
     }

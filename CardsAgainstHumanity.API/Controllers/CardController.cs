@@ -32,7 +32,7 @@ public class CardController : ControllerBase {
     [HttpPost]
     [Authorize(Policy = "User")]
     public ActionResult<CardDto> CreateCard([FromBody] CreateCardDto par) {
-        var userId = int.Parse(User.FindFirst(ClaimTypes.Name).Value);
+        var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
         var card = _cardService.CreateCard(userId, par);
         return CreatedAtAction(nameof(CreateCard), new { id = card.Id }, card);
     }
@@ -40,7 +40,7 @@ public class CardController : ControllerBase {
     [HttpPatch]
     [Authorize(Policy = "User")]
     public ActionResult<CardDto> UpdateCard([FromBody] UpdateCardDto par) {
-        var userId = int.Parse(User.FindFirst(ClaimTypes.Name).Value);
+        var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
         var card = _cardService.UpdateCard(userId, par);
         if(card == null) return NotFound();
         return Ok(card);
@@ -49,7 +49,7 @@ public class CardController : ControllerBase {
     [HttpDelete("{id}")]
     [Authorize(Policy = "User")]
     public ActionResult DeleteCard([FromRoute] int id) {
-        var userId = int.Parse(User.FindFirst(ClaimTypes.Name).Value);
+        var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
         _cardService.DeleteCard(userId, id);
         return Ok();
     }
