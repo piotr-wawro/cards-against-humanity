@@ -53,4 +53,10 @@ public class DeckController : ControllerBase {
         _deckService.DeleteDeck(userId, id);
         return Ok();
     }
+
+    [HttpGet("{id}/Cards")]
+    public ActionResult<IEnumerable<CardDto>> GetCards([FromRoute] int id) {
+        var cards = _deckService.GetCards(id);
+        return Ok(cards);
+    }
 }

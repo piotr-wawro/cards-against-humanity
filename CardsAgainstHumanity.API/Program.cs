@@ -1,6 +1,7 @@
 using CardsAgainstHumanity.API.Middleware.ErrorHandlers;
 using CardsAgainstHumanity.API.Services;
 using CardsAgainstHumanity.DatabaseAccess.DataAccess;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -16,17 +17,18 @@ public class Program {
 
         builder.Services.AddControllers();
 
-        builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(config => {
-            config.TokenValidationParameters = new() {
-                ValidateIssuer = true,
-                ValidateAudience = true,
-                ValidateLifetime = true,
-                ValidateIssuerSigningKey = true,
-                ValidIssuer = builder.Configuration["JWT:ValidIssuer"],
-                ValidAudience = builder.Configuration["JWT:ValidAudience"],
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]))
-            };
-        });
+        builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(config => {
+                config.TokenValidationParameters = new() {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = builder.Configuration["JWT:ValidIssuer"],
+                    ValidAudience = builder.Configuration["JWT:ValidAudience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]))
+                };
+            });
         builder.Services.AddAuthorization(config => {
             config.AddPolicy("Admin", policy => policy.RequireClaim(ClaimTypes.Role, "Admin"));
             config.AddPolicy("User", policy => policy.RequireClaim(ClaimTypes.Role, "User", "Admin"));
@@ -89,7 +91,10 @@ public class Program {
 
         app.UseSwagger();
         app.UseSwaggerUI(c => {
-            c.SwaggerEndpoint("/swagger/v1/swagger.json", "CardsAgainstHumanity.API v1");
+            c.SwaggerEndpoint(
+                "/swagger/v1/swagger.json",
+                "CardsAgainstHumanity.API v1"
+            );
         });
 
         app.MapControllers();

@@ -161,4 +161,22 @@ public class DeckService : IDeckService {
         _context.Decks.Remove(deck);
         _context.SaveChanges();
     }
+
+    public IEnumerable<CardDto> GetCards(int id) {
+        var cards =
+            from c in _context.Cards
+            join dc in _context.DeckCards on c.Id equals dc.CardId
+            where dc.DeckId == id
+            select new CardDto {
+                Id = c.Id,
+                Type = c.Type,
+                Text = c.Text,
+                Language = c.Language,
+                UserId = c.UserId,
+                BaseCardId = c.BaseCardId,
+                AverageVote = null,
+            };
+
+        return cards.ToList();
+    }
 }
