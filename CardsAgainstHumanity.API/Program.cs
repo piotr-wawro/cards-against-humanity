@@ -1,7 +1,7 @@
+using CardsAgainstHumanity.API.Hubs;
 using CardsAgainstHumanity.API.Middleware.ErrorHandlers;
 using CardsAgainstHumanity.API.Services;
 using CardsAgainstHumanity.DatabaseAccess.DataAccess;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -16,6 +16,7 @@ public class Program {
         var builder = WebApplication.CreateBuilder(args);
 
         builder.Services.AddControllers();
+        builder.Services.AddSignalR();
 
         builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(config => {
@@ -36,6 +37,7 @@ public class Program {
 
         builder.Services.AddScoped<ICardService, CardService>();
         builder.Services.AddScoped<IDeckService, DeckService>();
+        builder.Services.AddScoped<IGameService, GameService>();
         builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
         builder.Services.AddScoped<GeneralErrorHandler>();
         builder.Services.AddScoped<ApiErrorHandler>();
@@ -98,6 +100,7 @@ public class Program {
         });
 
         app.MapControllers();
+        app.MapHub<GameHub>("/ws/game");
 
         app.Run();
     }

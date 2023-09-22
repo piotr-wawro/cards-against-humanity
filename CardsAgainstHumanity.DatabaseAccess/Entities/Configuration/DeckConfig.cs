@@ -31,21 +31,12 @@ public class DeckConfig : IEntityTypeConfiguration<Deck> {
             builder.HasData(
                 new Deck {
                     Id = 1,
-                    Name = "Deck 1",
+                    Name = "Core Game",
                     Language = Language.English,
                     UserId = 1,
-                    black = 1,
-                    white = 1,
-                    SafeContent = true,
-                },
-                new Deck {
-                    Id = 2,
-                    Name = "Deck 2",
-                    Language = Language.English,
-                    UserId = 2,
-                    black = 1,
-                    white = 1,
-                    SafeContent = true,
+                    black = 89,
+                    white = 460,
+                    SafeContent = false,
                 }
             );
         }
